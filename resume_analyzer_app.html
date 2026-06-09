@@ -1,0 +1,1048 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f1623;--navy2:#161e2e;--navy3:#1e2a3e;--navy4:#253347;
+  --indigo:#6366f1;--indigo2:#818cf8;--indigo3:#a5b4fc;--indigo4:#e0e7ff;
+  --slate:#8892a4;--slate2:#b0bac8;--slate3:#d4dbe6;--slate4:#f0f3f7;
+  --green:#22c55e;--amber:#f59e0b;--red:#ef4444;--cyan:#06b6d4;
+  --text:#1a2235;--text2:#4a5568;--text3:#8892a4;
+  --bg:#f7f9fc;--card:#ffffff;--border:#e2e8f0;
+  --radius:10px;--radius-lg:14px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --text:#e8edf5;--text2:#9aa5b8;--text3:#5a6880;
+  --bg:#0b1120;--card:#111827;--border:#1e2a3e;
+  --navy:#060c18;--navy2:#0d1525;--navy3:#111e33;--navy4:#16263f;
+  --slate4:#1e2a3e;--slate3:#253347;--indigo4:#1e1f5e;
+}}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh;display:flex}
+.sidebar{width:220px;min-height:100vh;background:var(--navy2);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.07)}
+.logo-mark{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--indigo);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+.logo-text{font-size:15px;font-weight:600;color:#e8edf5;letter-spacing:-.3px}
+.logo-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px}
+.nav{padding:12px 8px;flex:1}
+.nav-section{font-size:10px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.3);text-transform:uppercase;padding:12px 8px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.nav-item.active{background:rgba(99,102,241,.2);color:var(--indigo3)}
+.nav-item .ti{font-size:16px}
+.nav-bottom{padding:12px 8px;border-top:1px solid rgba(255,255,255,.07)}
+.avatar-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.55);transition:background .15s}
+.avatar-row:hover{background:rgba(255,255,255,.07)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--indigo);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;flex-shrink:0}
+.avatar-info{flex:1;min-width:0}
+.avatar-name{font-size:12px;font-weight:500;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.avatar-role{font-size:10px;color:rgba(255,255,255,.35)}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.topbar{height:56px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;background:var(--card);flex-shrink:0}
+.topbar-title{font-size:16px;font-weight:600;color:var(--text);flex:1}
+.topbar-actions{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:var(--card);color:var(--text2)}
+.btn:hover{background:var(--bg);color:var(--text)}
+.btn-primary{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.btn-primary:hover{background:#5254cc;border-color:#5254cc}
+.content{flex:1;overflow-y:auto;padding:24px}
+.screen{display:none}
+.screen.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px}
+.card-sm{padding:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.card-sub{font-size:12px;color:var(--text3)}
+.metric-val{font-size:26px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;line-height:1.1;margin-top:8px}
+.metric-label{font-size:11px;color:var(--text3);margin-top:3px}
+.metric-delta{font-size:12px;color:var(--green);margin-top:4px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-green{background:#dcfce7;color:#16a34a}
+.badge-amber{background:#fef9c3;color:#a16207}
+.badge-red{background:#fee2e2;color:#b91c1c}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-purple{background:#ede9fe;color:#6d28d9}
+@media(prefers-color-scheme:dark){
+.badge-green{background:rgba(34,197,94,.15);color:#4ade80}
+.badge-amber{background:rgba(245,158,11,.15);color:#fbbf24}
+.badge-red{background:rgba(239,68,68,.15);color:#f87171}
+.badge-blue{background:rgba(59,130,246,.15);color:#60a5fa}
+.badge-purple{background:rgba(139,92,246,.15);color:#a78bfa}
+}
+.sep{height:1px;background:var(--border);margin:16px 0}
+.tag{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:12px;background:var(--slate4);color:var(--text2);border:1px solid var(--border);margin:3px}
+.tag.green{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
+.tag.red{background:#fef2f2;color:#dc2626;border-color:#fecaca}
+.tag.amber{background:#fffbeb;color:#d97706;border-color:#fed7aa}
+@media(prefers-color-scheme:dark){
+.tag{background:var(--navy3);color:var(--text2);border-color:var(--border)}
+.tag.green{background:rgba(34,197,94,.1);color:#4ade80;border-color:rgba(34,197,94,.2)}
+.tag.red{background:rgba(239,68,68,.1);color:#f87171;border-color:rgba(239,68,68,.2)}
+.tag.amber{background:rgba(245,158,11,.1);color:#fbbf24;border-color:rgba(245,158,11,.2)}
+}
+.progress-bar{height:6px;background:var(--slate4);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.table{width:100%;border-collapse:collapse}
+.table th{text-align:left;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px;border-bottom:1px solid var(--border)}
+.table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text)}
+.table tr:last-child td{border-bottom:none}
+.table tr:hover td{background:var(--bg)}
+.score-ring-wrap{display:flex;justify-content:center;align-items:center;padding:8px 0 16px}
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius-lg);padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.upload-zone:hover{border-color:var(--indigo);background:rgba(99,102,241,.04)}
+.upload-icon{font-size:40px;color:var(--text3);margin-bottom:12px}
+.upload-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+.upload-sub{font-size:13px;color:var(--text3)}
+.input-field{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;transition:border .15s;font-family:inherit}
+.input-field:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.textarea-field{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;transition:border .15s;resize:vertical;min-height:120px;font-family:inherit;line-height:1.5}
+.textarea-field:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+.tabs{display:flex;gap:2px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:20px;border:1px solid var(--border)}
+.tab{padding:7px 14px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text3);transition:all .15s;flex:1;text-align:center}
+.tab.active{background:var(--card);color:var(--indigo);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.strength-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.strength-item:last-child{border-bottom:none}
+.strength-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px}
+.strength-text{flex:1}
+.strength-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.strength-desc{font-size:12px;color:var(--text3);line-height:1.5}
+.suggest-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;background:var(--bg);margin-bottom:8px;border:1px solid var(--border)}
+.suggest-num{width:22px;height:22px;background:var(--indigo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.timeline-item{display:flex;gap:14px;padding-bottom:16px;position:relative}
+.timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--indigo);flex-shrink:0;margin-top:5px;position:relative;z-index:1}
+.timeline-line{position:absolute;left:4px;top:14px;bottom:0;width:2px;background:var(--border)}
+.timeline-item:last-child .timeline-line{display:none}
+.match-bar-wrap{margin-bottom:12px}
+.match-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.empty-state{text-align:center;padding:48px 24px;color:var(--text3)}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:.4}
+.empty-text{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:6px}
+.empty-sub{font-size:13px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:999}
+.modal{background:var(--card);border-radius:var(--radius-lg);padding:28px;width:480px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--text3);margin-bottom:20px}
+.modal-close{position:absolute;right:20px;top:20px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3)}
+.analyzing-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:1000}
+.analyzing-card{background:var(--card);border-radius:var(--radius-lg);padding:40px;text-align:center;width:360px}
+.spin{animation:spin 1s linear infinite;display:inline-block;font-size:40px;color:var(--indigo);margin-bottom:16px}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.analyzing-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.analyzing-steps{margin-top:16px;text-align:left}
+.astep{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13px;color:var(--text3)}
+.astep.done{color:var(--green)}
+.astep.active{color:var(--indigo);font-weight:500}
+.ring-container{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.ring-label{position:absolute;text-align:center}
+.ring-score{font-size:36px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--text);line-height:1}
+.ring-sub{font-size:11px;color:var(--text3);margin-top:3px}
+.admin-stat-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.admin-stat-row:last-child{border-bottom:none}
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+
+<h2 class="sr-only">ResumeAI — AI-powered resume analyzer dashboard application</h2>
+
+<div style="display:flex;min-height:100vh">
+
+<div class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-mark">
+      <div class="logo-icon"><i class="ti ti-file-certificate" aria-hidden="true"></i></div>
+      <div>
+        <div class="logo-text">ResumeAI</div>
+        <div class="logo-sub">Pro Plan</div>
+      </div>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-section">Main</div>
+    <button class="nav-item active" onclick="showScreen('dashboard',this)" aria-current="page">
+      <i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard
+    </button>
+    <button class="nav-item" onclick="showScreen('upload',this)">
+      <i class="ti ti-upload" aria-hidden="true"></i> Upload Resume
+    </button>
+    <button class="nav-item" onclick="showScreen('analysis',this)">
+      <i class="ti ti-chart-bar" aria-hidden="true"></i> Analysis Report
+    </button>
+    <button class="nav-item" onclick="showScreen('jobmatch',this)">
+      <i class="ti ti-briefcase" aria-hidden="true"></i> Job Matching
+    </button>
+    <div class="nav-section">History</div>
+    <button class="nav-item" onclick="showScreen('history',this)">
+      <i class="ti ti-history" aria-hidden="true"></i> My Resumes
+    </button>
+    <button class="nav-item" onclick="showScreen('profile',this)">
+      <i class="ti ti-user" aria-hidden="true"></i> Profile
+    </button>
+    <div class="nav-section">Admin</div>
+    <button class="nav-item" onclick="showScreen('admin',this)">
+      <i class="ti ti-shield" aria-hidden="true"></i> Admin Panel
+    </button>
+  </nav>
+  <div class="nav-bottom">
+    <div class="avatar-row">
+      <div class="avatar">JD</div>
+      <div class="avatar-info">
+        <div class="avatar-name">Jane Doe</div>
+        <div class="avatar-role">jane@example.com</div>
+      </div>
+      <i class="ti ti-settings" style="font-size:14px;color:rgba(255,255,255,.3)" aria-hidden="true"></i>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
+    <div class="topbar-actions">
+      <button class="btn" onclick="showScreen('upload',document.querySelector('.nav-item:nth-child(2)'))">
+        <i class="ti ti-plus" aria-hidden="true"></i> New Analysis
+      </button>
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--indigo4);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--indigo)"><i class="ti ti-bell" aria-hidden="true"></i></div>
+      <div class="avatar" style="width:32px;height:32px;font-size:11px;cursor:pointer">JD</div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="screen active" id="screen-dashboard">
+      <div class="grid4" style="margin-bottom:16px">
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span class="card-sub">Total Resumes</span>
+            <i class="ti ti-files" style="font-size:18px;color:var(--indigo)" aria-hidden="true"></i>
+          </div>
+          <div class="metric-val">12</div>
+          <div class="metric-delta"><i class="ti ti-trending-up" aria-hidden="true"></i> +3 this month</div>
+        </div>
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span class="card-sub">Best ATS Score</span>
+            <i class="ti ti-robot" style="font-size:18px;color:var(--green)" aria-hidden="true"></i>
+          </div>
+          <div class="metric-val" style="color:var(--green)">87</div>
+          <div class="metric-delta"><i class="ti ti-trending-up" aria-hidden="true"></i> +12 from first</div>
+        </div>
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span class="card-sub">Job Matches</span>
+            <i class="ti ti-briefcase" style="font-size:18px;color:var(--cyan)" aria-hidden="true"></i>
+          </div>
+          <div class="metric-val">8</div>
+          <div class="metric-delta" style="color:var(--cyan)"><i class="ti ti-star" aria-hidden="true"></i> 2 strong matches</div>
+        </div>
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span class="card-sub">Interview Ready</span>
+            <i class="ti ti-user-check" style="font-size:18px;color:var(--amber)" aria-hidden="true"></i>
+          </div>
+          <div class="metric-val" style="color:var(--amber)">74%</div>
+          <div class="metric-delta" style="color:var(--amber)"><i class="ti ti-trending-up" aria-hidden="true"></i> +8% improved</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <span class="card-title">ATS Score Trend</span>
+              <span class="badge badge-green">Improving</span>
+            </div>
+            <div style="position:relative;height:180px"><canvas id="trendChart" role="img" aria-label="Line chart showing ATS score improvement from 52 to 87 over 6 resume versions">ATS score progress: v1:52, v2:58, v3:63, v4:71, v5:79, v6:87</canvas></div>
+          </div>
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <span class="card-title">Section Scores</span>
+              <span class="badge badge-blue">Latest resume</span>
+            </div>
+            <div id="sectionBars"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div style="margin-bottom:14px">
+              <div class="card-title">Latest Resume</div>
+              <div class="card-sub" style="margin-top:2px">Senior_Dev_Resume_v6.pdf · Analyzed 2h ago</div>
+            </div>
+            <div class="score-ring-wrap">
+              <div class="ring-container">
+                <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Overall resume score: 82 out of 100">
+                  <title>Overall resume score: 82 out of 100</title>
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="var(--border)" stroke-width="10"/>
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="var(--indigo)" stroke-width="10" stroke-linecap="round"
+                    stroke-dasharray="427" stroke-dashoffset="77" transform="rotate(-90 80 80)"
+                    style="transition:stroke-dashoffset 1s ease"/>
+                </svg>
+                <div class="ring-label">
+                  <div class="ring-score">82</div>
+                  <div class="ring-sub">Overall</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+              <div style="text-align:center;padding:10px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+                <div style="font-size:22px;font-weight:700;color:var(--green)">87</div>
+                <div style="font-size:11px;color:var(--text3);margin-top:2px">ATS Score</div>
+              </div>
+              <div style="text-align:center;padding:10px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+                <div style="font-size:22px;font-weight:700;color:var(--amber)">74%</div>
+                <div style="font-size:11px;color:var(--text3);margin-top:2px">Interview Ready</div>
+              </div>
+            </div>
+            <div class="sep"></div>
+            <button class="btn btn-primary" style="width:100%" onclick="showScreen('analysis',document.querySelectorAll('.nav-item')[2])">
+              <i class="ti ti-chart-bar" aria-hidden="true"></i> View Full Analysis
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Recent Activity</div>
+            <div class="timeline-item">
+              <div style="position:relative"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text)">Resume analyzed</div>
+                <div style="font-size:12px;color:var(--text3)">Senior_Dev_Resume_v6.pdf · 2h ago</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div style="position:relative"><div class="timeline-dot" style="background:var(--cyan)"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text)">Job match: 91%</div>
+                <div style="font-size:12px;color:var(--text3)">Staff Engineer @ Stripe · 5h ago</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div style="position:relative"><div class="timeline-dot" style="background:var(--amber)"></div><div class="timeline-line"></div></div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text)">New suggestion added</div>
+                <div style="font-size:12px;color:var(--text3)">Add quantified metrics · Yesterday</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div style="position:relative"><div class="timeline-dot" style="background:var(--green)"></div></div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--text)">ATS score improved +8</div>
+                <div style="font-size:12px;color:var(--text3)">From 79 to 87 · 3 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="screen" id="screen-upload">
+      <div style="max-width:640px;margin:0 auto">
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title" style="margin-bottom:4px">Upload Your Resume</div>
+          <div class="card-sub" style="margin-bottom:20px">PDF format only. Max 10MB. Your data is encrypted and private.</div>
+          <div class="upload-zone" onclick="simulateUpload()" role="button" tabindex="0" aria-label="Click to upload resume PDF">
+            <div class="upload-icon"><i class="ti ti-cloud-upload" aria-hidden="true"></i></div>
+            <div class="upload-title">Drop your resume here</div>
+            <div class="upload-sub" style="margin-bottom:16px">or click to browse files</div>
+            <span class="btn">Browse PDF file</span>
+          </div>
+          <div id="upload-preview" style="display:none;margin-top:16px;padding:14px;background:var(--bg);border-radius:8px;border:1px solid var(--border);display:none">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:36px;height:36px;background:rgba(239,68,68,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:18px"><i class="ti ti-file-type-pdf" aria-hidden="true"></i></div>
+              <div style="flex:1">
+                <div style="font-size:13px;font-weight:600;color:var(--text)">Senior_Dev_Resume.pdf</div>
+                <div style="font-size:12px;color:var(--text3)">2.3 MB · PDF Document</div>
+              </div>
+              <span class="badge badge-green"><i class="ti ti-check" aria-hidden="true"></i> Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title" style="margin-bottom:14px">Analysis Options</div>
+          <div style="margin-bottom:14px">
+            <label style="font-size:13px;font-weight:500;color:var(--text);display:block;margin-bottom:6px">Target Job Title (optional)</label>
+            <input class="input-field" placeholder="e.g. Senior Software Engineer" id="job-title-input" />
+          </div>
+          <div style="margin-bottom:14px">
+            <label style="font-size:13px;font-weight:500;color:var(--text);display:block;margin-bottom:6px">Industry</label>
+            <select class="input-field" style="cursor:pointer">
+              <option>Technology</option>
+              <option>Finance</option>
+              <option>Healthcare</option>
+              <option>Marketing</option>
+              <option>Design</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:13px;font-weight:500;color:var(--text);display:block;margin-bottom:6px">Experience Level</label>
+            <select class="input-field" style="cursor:pointer">
+              <option>Senior (5-8 years)</option>
+              <option>Junior (0-2 years)</option>
+              <option>Mid-level (2-5 years)</option>
+              <option>Lead/Principal (8+ years)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;padding:12px;font-size:14px" onclick="startAnalysis()">
+          <i class="ti ti-robot" aria-hidden="true"></i> Analyze with AI
+        </button>
+      </div>
+    </div>
+
+    <!-- ANALYSIS -->
+    <div class="screen" id="screen-analysis">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div>
+          <div style="font-size:13px;color:var(--text3)">Analyzing: <strong style="color:var(--text)">Senior_Dev_Resume_v6.pdf</strong></div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <span class="badge badge-green">ATS: 87/100</span>
+          <button class="btn"><i class="ti ti-download" aria-hidden="true"></i> Export</button>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <div class="tab active" role="tab" aria-selected="true" onclick="switchTab('overview',this)" tabindex="0">Overview</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab('strengths',this)" tabindex="0">Strengths & Weaknesses</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab('ats',this)" tabindex="0">ATS Details</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab('suggestions',this)" tabindex="0">Suggestions</div>
+      </div>
+
+      <div id="tab-overview">
+        <div class="grid4" style="margin-bottom:16px">
+          <div class="card card-sm" style="text-align:center">
+            <div style="font-size:32px;font-weight:800;color:var(--indigo)">82</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">Overall Score</div>
+            <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:82%;background:var(--indigo)"></div></div>
+          </div>
+          <div class="card card-sm" style="text-align:center">
+            <div style="font-size:32px;font-weight:800;color:var(--green)">87</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">ATS Score</div>
+            <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:87%;background:var(--green)"></div></div>
+          </div>
+          <div class="card card-sm" style="text-align:center">
+            <div style="font-size:32px;font-weight:800;color:var(--amber)">74%</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">Interview Ready</div>
+            <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:74%;background:var(--amber)"></div></div>
+          </div>
+          <div class="card card-sm" style="text-align:center">
+            <div style="font-size:32px;font-weight:800;color:var(--cyan)">91%</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">Best Job Match</div>
+            <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:91%;background:var(--cyan)"></div></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Section Breakdown</div>
+            <div id="sectionBarsAnalysis"></div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Skills Detected</div>
+            <div class="section-label">Technical Skills</div>
+            <div style="margin-bottom:12px">
+              <span class="tag green">Python</span><span class="tag green">React</span><span class="tag green">Node.js</span>
+              <span class="tag green">PostgreSQL</span><span class="tag green">AWS</span><span class="tag green">Docker</span>
+              <span class="tag green">TypeScript</span><span class="tag green">GraphQL</span>
+            </div>
+            <div class="section-label">Soft Skills</div>
+            <div style="margin-bottom:12px">
+              <span class="tag">Leadership</span><span class="tag">Mentoring</span><span class="tag">Agile</span>
+              <span class="tag">Communication</span>
+            </div>
+            <div class="section-label">Missing Keywords</div>
+            <div>
+              <span class="tag red">Kubernetes</span><span class="tag red">CI/CD</span><span class="tag amber">System Design</span>
+              <span class="tag amber">Microservices</span><span class="tag red">Redis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-strengths" style="display:none">
+        <div class="grid2">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+              <div style="width:28px;height:28px;background:#dcfce7;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:14px"><i class="ti ti-thumb-up" aria-hidden="true"></i></div>
+              <span class="card-title">Strengths</span>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#dcfce7;color:var(--green)"><i class="ti ti-check" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Strong Technical Skills Section</div>
+                <div class="strength-desc">Well-organized with 15+ in-demand technologies. Matches industry standards for the target role.</div>
+              </div>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#dcfce7;color:var(--green)"><i class="ti ti-check" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Quantified Achievements</div>
+                <div class="strength-desc">Most bullet points include measurable impact: "Reduced API latency by 40%", "Led team of 8 engineers."</div>
+              </div>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#dcfce7;color:var(--green)"><i class="ti ti-check" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Clear Career Progression</div>
+                <div class="strength-desc">Consistent upward trajectory from Junior to Senior Engineer across 3 companies over 7 years.</div>
+              </div>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#dcfce7;color:var(--green)"><i class="ti ti-check" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Education Section Complete</div>
+                <div class="strength-desc">CS degree from accredited university with GPA and relevant coursework listed.</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+              <div style="width:28px;height:28px;background:#fee2e2;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--red);font-size:14px"><i class="ti ti-thumb-down" aria-hidden="true"></i></div>
+              <span class="card-title">Weaknesses</span>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#fee2e2;color:var(--red)"><i class="ti ti-x" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Summary Too Generic</div>
+                <div class="strength-desc">Professional summary lacks specificity. Phrases like "results-driven developer" are ATS noise, not signal.</div>
+              </div>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#fee2e2;color:var(--red)"><i class="ti ti-x" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Missing Cloud Certifications</div>
+                <div class="strength-desc">No AWS/GCP/Azure certs listed. 73% of senior roles at target companies require at least one.</div>
+              </div>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#fef9c3;color:var(--amber)"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">2015–2017 Gap Unexplained</div>
+                <div class="strength-desc">A 2-year gap with no explanation will trigger ATS flags. Add freelance, study, or other context.</div>
+              </div>
+            </div>
+            <div class="strength-item">
+              <div class="strength-icon" style="background:#fef9c3;color:var(--amber)"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div>
+              <div class="strength-text">
+                <div class="strength-title">Inconsistent Date Format</div>
+                <div class="strength-desc">Mix of "Jan 2020" and "2020-01" formats. Use one format throughout for ATS parsing accuracy.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-ats" style="display:none">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:16px">ATS Compatibility Checklist</div>
+            <div id="ats-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Keyword Density Analysis</div>
+            <div style="position:relative;height:220px"><canvas id="keywordChart" role="img" aria-label="Bar chart showing keyword frequency: Python 8, React 6, Node.js 5, AWS 4, Docker 3, TypeScript 3, GraphQL 2">Keyword counts shown in bar chart.</canvas></div>
+            <div class="sep"></div>
+            <div class="card-title" style="margin-bottom:10px">Formatting Score</div>
+            <div class="match-bar-wrap">
+              <div class="match-label"><span style="color:var(--text2)">Font legibility</span><span style="font-weight:600;color:var(--green)">100%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--green)"></div></div>
+            </div>
+            <div class="match-bar-wrap">
+              <div class="match-label"><span style="color:var(--text2)">Section structure</span><span style="font-weight:600;color:var(--green)">92%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:92%;background:var(--green)"></div></div>
+            </div>
+            <div class="match-bar-wrap">
+              <div class="match-label"><span style="color:var(--text2)">Date consistency</span><span style="font-weight:600;color:var(--amber)">60%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:60%;background:var(--amber)"></div></div>
+            </div>
+            <div class="match-bar-wrap">
+              <div class="match-label"><span style="color:var(--text2)">No special characters</span><span style="font-weight:600;color:var(--green)">95%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:95%;background:var(--green)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-suggestions" style="display:none">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Top Improvement Suggestions</div>
+            <div class="suggest-item">
+              <div class="suggest-num">1</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Rewrite professional summary</div><div style="font-size:12px;color:var(--text3)">Replace generic phrases with role-specific accomplishments. Include your specialty and years of experience in the first sentence. Expected ATS boost: +5 pts.</div></div>
+            </div>
+            <div class="suggest-item">
+              <div class="suggest-num">2</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Add Kubernetes to skills</div><div style="font-size:12px;color:var(--text3)">87% of senior backend roles at FAANG-tier companies list Kubernetes as required. If you have any experience, add it with a brief descriptor.</div></div>
+            </div>
+            <div class="suggest-item">
+              <div class="suggest-num">3</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Explain 2015–2017 employment gap</div><div style="font-size:12px;color:var(--text3)">ATS systems and recruiters flag unexplained gaps. Add a brief entry: freelance consulting, open source, or continuing education.</div></div>
+            </div>
+            <div class="suggest-item">
+              <div class="suggest-num">4</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Standardize date formatting</div><div style="font-size:12px;color:var(--text3)">Use "Month Year" format throughout (e.g., "Jan 2020 – Mar 2022"). Inconsistency reduces ATS parsing accuracy by up to 15%.</div></div>
+            </div>
+            <div class="suggest-item">
+              <div class="suggest-num">5</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Add a GitHub/portfolio link</div><div style="font-size:12px;color:var(--text3)">95% of engineering roles expect a public portfolio. A pinned GitHub with 3+ relevant projects significantly improves recruiter conversion.</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Industry Recommendations</div>
+            <div style="padding:14px;background:rgba(99,102,241,.07);border-radius:8px;border:1px solid rgba(99,102,241,.2);margin-bottom:12px">
+              <div style="font-size:12px;font-weight:600;color:var(--indigo);margin-bottom:6px">Career Trajectory</div>
+              <div style="font-size:13px;color:var(--text2);line-height:1.6">Based on your experience and skills, you're well-positioned for Staff Engineer or Engineering Manager roles at Series B+ startups or Big Tech. Your leadership experience in 3 bullet points is under-emphasized relative to market expectations.</div>
+            </div>
+            <div style="padding:14px;background:rgba(34,197,94,.07);border-radius:8px;border:1px solid rgba(34,197,94,.2);margin-bottom:12px">
+              <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px">Certifications to Add</div>
+              <div style="font-size:13px;color:var(--text2);line-height:1.6">AWS Solutions Architect Associate, Certified Kubernetes Administrator (CKA), or Google Cloud Professional Data Engineer would all push ATS score past 92.</div>
+            </div>
+            <div style="padding:14px;background:rgba(245,158,11,.07);border-radius:8px;border:1px solid rgba(245,158,11,.2)">
+              <div style="font-size:12px;font-weight:600;color:var(--amber);margin-bottom:6px">Interview Readiness</div>
+              <div style="font-size:13px;color:var(--text2);line-height:1.6">Strong technical foundation, but prepare deeper system design narratives. Interviewers at your target level will probe distributed systems depth. Practice designing at 100M+ user scale.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOB MATCH -->
+    <div class="screen" id="screen-jobmatch">
+      <div class="two-col">
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title" style="margin-bottom:14px">Paste Job Description</div>
+            <textarea class="textarea-field" id="job-desc" placeholder="Paste the full job description here...
+e.g. We are looking for a Senior Software Engineer to join our platform team. You will be responsible for designing and building scalable distributed systems, working with React, Node.js, AWS, and Kubernetes..."></textarea>
+            <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="runJobMatch()">
+              <i class="ti ti-search" aria-hidden="true"></i> Match Resume to Job
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Saved Job Matches</div>
+            <table class="table">
+              <thead><tr><th>Company</th><th>Role</th><th>Match</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><strong>Stripe</strong></td><td style="color:var(--text2)">Staff Engineer</td><td><span class="badge badge-green">91%</span></td><td><button class="btn" style="padding:4px 10px;font-size:11px" onclick="loadJobMatch(91,'Stripe')">View</button></td></tr>
+                <tr><td><strong>Notion</strong></td><td style="color:var(--text2)">Senior SWE</td><td><span class="badge badge-green">84%</span></td><td><button class="btn" style="padding:4px 10px;font-size:11px" onclick="loadJobMatch(84,'Notion')">View</button></td></tr>
+                <tr><td><strong>Linear</strong></td><td style="color:var(--text2)">Full Stack Eng</td><td><span class="badge badge-amber">72%</span></td><td><button class="btn" style="padding:4px 10px;font-size:11px" onclick="loadJobMatch(72,'Linear')">View</button></td></tr>
+                <tr><td><strong>Vercel</strong></td><td style="color:var(--text2)">Platform Eng</td><td><span class="badge badge-amber">68%</span></td><td><button class="btn" style="padding:4px 10px;font-size:11px" onclick="loadJobMatch(68,'Vercel')">View</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="card" id="match-result-card">
+            <div style="text-align:center;padding:32px 0">
+              <div style="font-size:40px;color:var(--text3);margin-bottom:12px;opacity:.3"><i class="ti ti-target" aria-hidden="true"></i></div>
+              <div style="font-size:15px;font-weight:500;color:var(--text2);margin-bottom:6px">No job matched yet</div>
+              <div style="font-size:13px;color:var(--text3)">Paste a job description and click match, or select a saved match.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="screen" id="screen-history">
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span class="card-title">Resume History</span>
+          <span class="badge badge-purple" style="margin-left:auto">12 resumes</span>
+          <button class="btn btn-primary btn-sm" style="padding:6px 12px;font-size:12px" onclick="showScreen('upload',document.querySelectorAll('.nav-item')[1])">
+            <i class="ti ti-plus" aria-hidden="true"></i> Upload New
+          </button>
+        </div>
+        <table class="table">
+          <thead><tr><th>File Name</th><th>Uploaded</th><th>Overall</th><th>ATS</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="history-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="screen" id="screen-profile">
+      <div style="max-width:580px">
+        <div class="card" style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+            <div class="avatar" style="width:64px;height:64px;font-size:22px;font-weight:700">JD</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--text)">Jane Doe</div>
+              <div style="font-size:13px;color:var(--text3)">jane@example.com · Member since Jan 2024</div>
+              <span class="badge badge-purple" style="margin-top:6px">Pro Plan</span>
+            </div>
+            <button class="btn" style="margin-left:auto"><i class="ti ti-edit" aria-hidden="true"></i> Edit</button>
+          </div>
+          <div class="sep"></div>
+          <div class="grid2">
+            <div>
+              <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px">Full Name</label>
+              <input class="input-field" value="Jane Doe" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px">Email</label>
+              <input class="input-field" value="jane@example.com" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px">Target Role</label>
+              <input class="input-field" value="Staff Engineer" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px">Industry</label>
+              <select class="input-field" style="cursor:pointer"><option selected>Technology</option><option>Finance</option></select>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:16px"><i class="ti ti-device-floppy" aria-hidden="true"></i> Save Changes</button>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title" style="margin-bottom:14px">Subscription & Usage</div>
+          <div class="admin-stat-row">
+            <span style="color:var(--text2)">Current plan</span>
+            <span class="badge badge-purple">Pro · $19/mo</span>
+          </div>
+          <div class="admin-stat-row">
+            <span style="color:var(--text2)">Analyses this month</span>
+            <span style="font-weight:600;color:var(--text)">7 / 50</span>
+          </div>
+          <div class="admin-stat-row">
+            <span style="color:var(--text2)">Job matches</span>
+            <span style="font-weight:600;color:var(--text)">8 / unlimited</span>
+          </div>
+          <div class="admin-stat-row">
+            <span style="color:var(--text2)">Storage used</span>
+            <span style="font-weight:600;color:var(--text)">23.4 MB / 1 GB</span>
+          </div>
+          <button class="btn" style="margin-top:14px;color:var(--indigo);border-color:var(--indigo)"><i class="ti ti-arrow-up-circle" aria-hidden="true"></i> Upgrade to Enterprise</button>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">Security</div>
+          <div style="margin-bottom:12px">
+            <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px">Current Password</label>
+            <input class="input-field" type="password" value="••••••••" />
+          </div>
+          <div style="margin-bottom:12px">
+            <label style="font-size:12px;color:var(--text3);display:block;margin-bottom:4px">New Password</label>
+            <input class="input-field" type="password" placeholder="Min 8 characters" />
+          </div>
+          <button class="btn" style="margin-top:4px"><i class="ti ti-lock" aria-hidden="true"></i> Update Password</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div class="screen" id="screen-admin">
+      <div class="grid4" style="margin-bottom:16px">
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <i class="ti ti-users" style="color:var(--indigo);font-size:18px" aria-hidden="true"></i>
+            <span class="card-sub">Total Users</span>
+          </div>
+          <div class="metric-val">4,821</div>
+          <div class="metric-delta">+142 this week</div>
+        </div>
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <i class="ti ti-files" style="color:var(--cyan);font-size:18px" aria-hidden="true"></i>
+            <span class="card-sub">Resumes Analyzed</span>
+          </div>
+          <div class="metric-val">38,142</div>
+          <div class="metric-delta">+1,204 today</div>
+        </div>
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <i class="ti ti-api" style="color:var(--amber);font-size:18px" aria-hidden="true"></i>
+            <span class="card-sub">API Calls Today</span>
+          </div>
+          <div class="metric-val">92,441</div>
+          <div class="metric-delta" style="color:var(--amber)">84% of limit</div>
+        </div>
+        <div class="card card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <i class="ti ti-currency-dollar" style="color:var(--green);font-size:18px" aria-hidden="true"></i>
+            <span class="card-sub">MRR</span>
+          </div>
+          <div class="metric-val" style="color:var(--green)">$41.2k</div>
+          <div class="metric-delta">+8.3% MoM</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <span class="card-title">User Management</span>
+            <button class="btn" style="font-size:12px;padding:5px 10px"><i class="ti ti-plus" aria-hidden="true"></i> Add User</button>
+          </div>
+          <table class="table">
+            <thead><tr><th>User</th><th>Plan</th><th>Analyses</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><div style="font-weight:500">Jane Doe</div><div style="font-size:11px;color:var(--text3)">jane@example.com</div></td><td><span class="badge badge-purple">Pro</span></td><td>12</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td><div style="font-weight:500">Alex Kim</div><div style="font-size:11px;color:var(--text3)">alex@startup.io</div></td><td><span class="badge badge-blue">Free</span></td><td>3</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td><div style="font-weight:500">Maria Santos</div><div style="font-size:11px;color:var(--text3)">maria@corp.com</div></td><td><span class="badge badge-amber">Enterprise</span></td><td>87</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td><div style="font-weight:500">Tom Wright</div><div style="font-size:11px;color:var(--text3)">tom@email.com</div></td><td><span class="badge badge-blue">Free</span></td><td>1</td><td><span class="badge badge-red">Suspended</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title" style="margin-bottom:14px">System Health</div>
+            <div class="admin-stat-row">
+              <span style="color:var(--text2)"><i class="ti ti-server" aria-hidden="true"></i> API latency</span>
+              <span class="badge badge-green">142ms avg</span>
+            </div>
+            <div class="admin-stat-row">
+              <span style="color:var(--text2)"><i class="ti ti-database" aria-hidden="true"></i> DB connections</span>
+              <span style="font-weight:600;color:var(--text)">24 / 100</span>
+            </div>
+            <div class="admin-stat-row">
+              <span style="color:var(--text2)"><i class="ti ti-brain" aria-hidden="true"></i> AI queue</span>
+              <span style="font-weight:600;color:var(--text)">3 pending</span>
+            </div>
+            <div class="admin-stat-row">
+              <span style="color:var(--text2)"><i class="ti ti-upload" aria-hidden="true"></i> Storage used</span>
+              <span class="badge badge-amber">68% (13.6 GB)</span>
+            </div>
+            <div class="admin-stat-row">
+              <span style="color:var(--text2)"><i class="ti ti-shield-check" aria-hidden="true"></i> Uptime (30d)</span>
+              <span class="badge badge-green">99.97%</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">Plan Distribution</div>
+            <div style="position:relative;height:180px"><canvas id="planChart" role="img" aria-label="Donut chart showing plan distribution: Free 58%, Pro 31%, Enterprise 11%">Plan distribution: Free 58%, Pro 31%, Enterprise 11%</canvas></div>
+            <div style="display:flex;gap:16px;justify-content:center;font-size:12px;color:var(--text3);margin-top:10px">
+              <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#6366f1;display:inline-block"></span>Free 58%</span>
+              <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#22c55e;display:inline-block"></span>Pro 31%</span>
+              <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#f59e0b;display:inline-block"></span>Ent. 11%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div id="analyzing-overlay" class="analyzing-overlay" style="display:none" aria-live="polite" aria-label="Analyzing resume">
+  <div class="analyzing-card">
+    <div class="spin"><i class="ti ti-robot" aria-hidden="true"></i></div>
+    <div class="analyzing-title">Analyzing your resume</div>
+    <div style="font-size:13px;color:var(--text3)">AI is reading your resume and generating insights…</div>
+    <div class="analyzing-steps" id="asteps">
+      <div class="astep active" id="as1"><i class="ti ti-loader" aria-hidden="true"></i> Extracting text from PDF…</div>
+      <div class="astep" id="as2"><i class="ti ti-circle" aria-hidden="true"></i> Parsing resume sections…</div>
+      <div class="astep" id="as3"><i class="ti ti-circle" aria-hidden="true"></i> Running ATS compatibility check…</div>
+      <div class="astep" id="as4"><i class="ti ti-circle" aria-hidden="true"></i> Generating AI recommendations…</div>
+      <div class="astep" id="as5"><i class="ti ti-circle" aria-hidden="true"></i> Computing semantic embeddings…</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+var chartsInitialized = {};
+
+function showScreen(name, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => { n.classList.remove('active'); n.removeAttribute('aria-current'); });
+  document.getElementById('screen-' + name).classList.add('active');
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-current','page'); }
+  var titles = {dashboard:'Dashboard',upload:'Upload Resume',analysis:'Analysis Report',jobmatch:'Job Matching',history:'My Resumes',profile:'Profile',admin:'Admin Panel'};
+  document.getElementById('topbar-title').textContent = titles[name] || name;
+  if (!chartsInitialized[name]) { chartsInitialized[name] = true; initCharts(name); }
+}
+
+function initCharts(name) {
+  if (name === 'dashboard') {
+    var ctx = document.getElementById('trendChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['v1','v2','v3','v4','v5','v6'],
+        datasets: [{
+          label: 'ATS Score',
+          data: [52,58,63,71,79,87],
+          borderColor: '#6366f1',
+          backgroundColor: 'rgba(99,102,241,0.08)',
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#6366f1',
+          pointRadius: 4
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: 40, max: 100, grid: { color: 'rgba(130,140,160,0.1)' }, ticks: { color: '#8892a4', font: { size: 11 } } },
+          x: { grid: { display: false }, ticks: { color: '#8892a4', font: { size: 11 } } }
+        }
+      }
+    });
+    renderSectionBars('sectionBars');
+  }
+  if (name === 'analysis') {
+    renderSectionBars('sectionBarsAnalysis');
+    var ctx2 = document.getElementById('keywordChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Python','React','Node.js','AWS','Docker','TypeScript','GraphQL'],
+        datasets: [{ label: 'Mentions', data: [8,6,5,4,3,3,2], backgroundColor: '#6366f1', borderRadius: 4 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { grid: { color: 'rgba(130,140,160,0.1)' }, ticks: { color: '#8892a4', font: { size: 11 } } },
+          x: { grid: { display: false }, ticks: { color: '#8892a4', font: { size: 11 } } }
+        }
+      }
+    });
+    renderATSList();
+  }
+  if (name === 'admin') {
+    var ctx3 = document.getElementById('planChart').getContext('2d');
+    new Chart(ctx3, {
+      type: 'doughnut',
+      data: {
+        labels: ['Free','Pro','Enterprise'],
+        datasets: [{ data: [58,31,11], backgroundColor: ['#6366f1','#22c55e','#f59e0b'], borderWidth: 0 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '68%',
+        plugins: { legend: { display: false } }
+      }
+    });
+  }
+  if (name === 'history') renderHistoryTable();
+}
+
+function renderSectionBars(id) {
+  var sections = [
+    { label: 'Work Experience', score: 88, color: '#6366f1' },
+    { label: 'Technical Skills', score: 92, color: '#22c55e' },
+    { label: 'Professional Summary', score: 61, color: '#f59e0b' },
+    { label: 'Education', score: 95, color: '#22c55e' },
+    { label: 'Certifications', score: 42, color: '#ef4444' },
+    { label: 'Projects', score: 78, color: '#06b6d4' }
+  ];
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = sections.map(s =>
+    '<div class="match-bar-wrap"><div class="match-label"><span style="color:var(--text2);font-size:12px">' + s.label + '</span><span style="font-weight:600;font-size:12px;color:' + s.color + '">' + s.score + '</span></div><div class="progress-bar"><div class="progress-fill" style="width:' + s.score + '%;background:' + s.color + '"></div></div></div>'
+  ).join('');
+}
+
+function renderATSList() {
+  var checks = [
+    { label: 'No images or graphics in resume', pass: true },
+    { label: 'Standard section headings used', pass: true },
+    { label: 'No tables or columns', pass: false },
+    { label: 'Contact info at top', pass: true },
+    { label: 'No special Unicode characters', pass: true },
+    { label: 'All dates consistently formatted', pass: false },
+    { label: 'File name has no spaces', pass: true },
+    { label: 'Email address is professional', pass: true },
+    { label: 'Action verbs start bullet points', pass: true },
+    { label: 'No graphics or charts embedded', pass: true },
+  ];
+  var el = document.getElementById('ats-list');
+  if (!el) return;
+  el.innerHTML = checks.map(c =>
+    '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">' +
+    '<i class="ti ti-' + (c.pass ? 'circle-check' : 'circle-x') + '" style="font-size:17px;color:' + (c.pass ? '#22c55e' : '#ef4444') + '" aria-hidden="true"></i>' +
+    '<span style="font-size:13px;color:var(--text)">' + c.label + '</span>' +
+    '<span class="badge ' + (c.pass ? 'badge-green' : 'badge-red') + '" style="margin-left:auto">' + (c.pass ? 'Pass' : 'Fail') + '</span>' +
+    '</div>'
+  ).join('');
+}
+
+function renderHistoryTable() {
+  var resumes = [
+    { name: 'Senior_Dev_Resume_v6.pdf', date: 'Jun 7, 2025', overall: 82, ats: 87, status: 'Analyzed' },
+    { name: 'Senior_Dev_Resume_v5.pdf', date: 'Jun 1, 2025', overall: 76, ats: 79, status: 'Analyzed' },
+    { name: 'Senior_Dev_Resume_v4.pdf', date: 'May 22, 2025', overall: 69, ats: 71, status: 'Analyzed' },
+    { name: 'Resume_2024_final.pdf', date: 'Mar 10, 2025', overall: 58, ats: 63, status: 'Analyzed' },
+    { name: 'CV_draft.pdf', date: 'Jan 5, 2025', overall: null, ats: null, status: 'Processing' },
+  ];
+  var el = document.getElementById('history-table');
+  if (!el) return;
+  el.innerHTML = resumes.map(r =>
+    '<tr><td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;background:rgba(239,68,68,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#ef4444;font-size:13px"><i class="ti ti-file-type-pdf" aria-hidden="true"></i></div><div><div style="font-size:13px;font-weight:500">' + r.name + '</div><div style="font-size:11px;color:var(--text3)">' + r.date + '</div></div></div></td>' +
+    '<td>' + (r.overall ? '<span style="font-weight:600;color:var(--indigo)">' + r.overall + '</span>' : '—') + '</td>' +
+    '<td>' + (r.ats ? '<span style="font-weight:600;color:var(--green)">' + r.ats + '</span>' : '—') + '</td>' +
+    '<td><span class="badge ' + (r.status === 'Analyzed' ? 'badge-green' : 'badge-amber') + '">' + r.status + '</span></td>' +
+    '<td><button class="btn" style="padding:4px 10px;font-size:11px" onclick="showScreen(\'analysis\',document.querySelectorAll(\'.nav-item\')[2])"><i class="ti ti-eye" aria-hidden="true" style="font-size:12px"></i> View</button></td></tr>'
+  ).join('');
+}
+
+function switchTab(tab, el) {
+  ['overview','strengths','ats','suggestions'].forEach(t => {
+    var el2 = document.getElementById('tab-' + t);
+    if (el2) el2.style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+  el.classList.add('active');
+  el.setAttribute('aria-selected','true');
+  if (tab === 'ats' && !chartsInitialized['ats-charts']) { chartsInitialized['ats-charts'] = true; renderATSList(); var ctx = document.getElementById('keywordChart'); if(ctx){ var c = new Chart(ctx.getContext('2d'),{type:'bar',data:{labels:['Python','React','Node.js','AWS','Docker','TypeScript','GraphQL'],datasets:[{label:'Mentions',data:[8,6,5,4,3,3,2],backgroundColor:'#6366f1',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(130,140,160,0.1)'},ticks:{color:'#8892a4',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#8892a4',font:{size:11}}}}}}); } }
+}
+
+function simulateUpload() {
+  var prev = document.getElementById('upload-preview');
+  prev.style.display = 'flex';
+}
+
+function startAnalysis() {
+  var overlay = document.getElementById('analyzing-overlay');
+  overlay.style.display = 'flex';
+  var steps = ['as1','as2','as3','as4','as5'];
+  var i = 0;
+  document.getElementById(steps[0]).className = 'astep active';
+  var timer = setInterval(function() {
+    if (i < steps.length) {
+      document.getElementById(steps[i]).className = 'astep done';
+      document.getElementById(steps[i]).querySelector('.ti').className = 'ti ti-check';
+      i++;
+      if (i < steps.length) document.getElementById(steps[i]).className = 'astep active';
+    } else {
+      clearInterval(timer);
+      setTimeout(function() {
+        overlay.style.display = 'none';
+        showScreen('analysis', document.querySelectorAll('.nav-item')[2]);
+        steps.forEach(function(s,idx) {
+          var el = document.getElementById(s);
+          el.className = 'astep';
+          el.querySelector('.ti').className = 'ti ti-circle';
+        });
+        document.getElementById(steps[0]).className = 'astep active';
+      }, 600);
+    }
+  }, 700);
+}
+
+function runJobMatch() {
+  var desc = document.getElementById('job-desc').value;
+  if (!desc.trim()) { document.getElementById('job-desc').focus(); return; }
+  loadJobMatch(78, 'Custom Job');
+}
+
+function loadJobMatch(score, company) {
+  var color = score >= 85 ? '#22c55e' : score >= 70 ? '#f59e0b' : '#ef4444';
+  var badgeClass = score >= 85 ? 'badge-green' : score >= 70 ? 'badge-amber' : 'badge-red';
+  var matched = ['Python','React','Node.js','AWS','PostgreSQL','Docker'];
+  var missing = score >= 85 ? ['Kubernetes','Redis'] : score >= 70 ? ['Kubernetes','Redis','CI/CD','System Design'] : ['Kubernetes','Redis','CI/CD','System Design','Go','gRPC'];
+  var card = document.getElementById('match-result-card');
+  card.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div><div class="card-title">' + company + ' Match Analysis</div><div class="card-sub">vs. Senior_Dev_Resume_v6.pdf</div></div><span class="badge ' + badgeClass + '" style="font-size:16px;padding:6px 14px">' + score + '% match</span></div>' +
+  '<div class="score-ring-wrap"><div class="ring-container"><svg width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Job match score: ' + score + ' percent"><title>Job match score: ' + score + ' percent</title><circle cx="60" cy="60" r="50" fill="none" stroke="var(--border)" stroke-width="8"/><circle cx="60" cy="60" r="50" fill="none" stroke="' + color + '" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="' + Math.round(314*(1-score/100)) + '" transform="rotate(-90 60 60)"/></svg><div class="ring-label"><div style="font-size:28px;font-weight:800;color:' + color + ';line-height:1">' + score + '</div><div style="font-size:11px;color:var(--text3);margin-top:3px">/ 100</div></div></div></div>' +
+  '<div class="sep"></div>' +
+  '<div class="section-label">Matched Skills</div><div style="margin-bottom:12px">' + matched.map(s => '<span class="tag green">' + s + '</span>').join('') + '</div>' +
+  '<div class="section-label">Missing / Weak Skills</div><div style="margin-bottom:14px">' + missing.map(s => '<span class="tag red">' + s + '</span>').join('') + '</div>' +
+  '<div style="padding:12px;background:rgba(99,102,241,.07);border-radius:8px;border:1px solid rgba(99,102,241,.2);font-size:13px;color:var(--text2);line-height:1.6"><strong style="color:var(--indigo)">AI Recommendation:</strong> To increase match to 90%+, add Kubernetes and Redis experience to your skills section. Tailor your summary to mention distributed systems design.</div>';
+}
+
+chartsInitialized['dashboard'] = true;
+setTimeout(function() { initCharts('dashboard'); }, 100);
+</script>
